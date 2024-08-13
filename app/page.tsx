@@ -27,12 +27,12 @@ export default function Home() {
 
   useEffect(() => {
     const divineToChaos = (divine: number) => {
-      return Math.floor(divine * price);
+      return divine * price;
     };
-    setChaosRawOutput(divineToChaos(divineInput));
+    setChaosRawOutput(Math.floor(divineToChaos(divineInput)));
     const div = Math.floor(divineInput);
     setDivineOutput(div);
-    const chaos = Math.round((divineInput - Math.floor(divineInput)) * price);
+    const chaos = Math.floor((divineInput - Math.floor(divineInput)) * price);
     setChaosOutput(chaos);
   }, [divineInput, price]);
 
@@ -101,17 +101,15 @@ export default function Home() {
                 />
               </div>
               <div className="flex gap-2">
-                {chaosRawOutput !== undefined && (
-                  <div className="flex items-center gap-1">
-                    <span>= {chaosRawOutput}</span>
-                    <Image
-                      src="/chaos_orb.png"
-                      alt="Chaos Orb"
-                      width={24}
-                      height={24}
-                    />
-                  </div>
-                )}
+                <div className="flex items-center gap-1">
+                  <span>= {chaosRawOutput}</span>
+                  <Image
+                    src="/chaos_orb.png"
+                    alt="Chaos Orb"
+                    width={24}
+                    height={24}
+                  />
+                </div>
                 {divineOutput !== 0 && chaosOutput !== 0 && (
                   <>
                     OR
@@ -158,17 +156,15 @@ export default function Home() {
               </div>
               <div className="flex gap-2">
                 ≈
-                {divineRawOutput !== undefined && (
-                  <div className="flex items-center gap-1">
-                    <span> {divineRawOutput}</span>
-                    <Image
-                      src="/divine_orb.png"
-                      alt="Divine Orb"
-                      width={24}
-                      height={24}
-                    />
-                  </div>
-                )}
+                <div className="flex items-center gap-1">
+                  <span> {divineRawOutput}</span>
+                  <Image
+                    src="/divine_orb.png"
+                    alt="Divine Orb"
+                    width={24}
+                    height={24}
+                  />
+                </div>
                 {divineOutput !== 0 && chaosOutput !== 0 && (
                   <>
                     OR
