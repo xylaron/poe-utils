@@ -16,7 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowRightLeft } from "lucide-react";
 
 export default function Home() {
-  const [price, setPrice] = useState<number>(160);
+  const [priceInput, setPriceInput] = useState<number>(160);
   const [divineInput, setDivineInput] = useState<number>(1);
   const [chaosInput, setChaosInput] = useState<number>(160);
   const [chaosRawOutput, setChaosRawOutput] = useState<number>(0);
@@ -26,6 +26,8 @@ export default function Home() {
   const [mode, setMode] = useState<"chaos" | "divine">("divine");
 
   useEffect(() => {
+    if (mode !== "divine") return;
+    const price = priceInput < 1 ? 1 : priceInput;
     const divineToChaos = (divine: number) => {
       return divine * price;
     };
@@ -34,9 +36,11 @@ export default function Home() {
     setDivineOutput(div);
     const chaos = Math.floor((divineInput - Math.floor(divineInput)) * price);
     setChaosOutput(chaos);
-  }, [divineInput, price]);
+  }, [divineInput, priceInput, mode]);
 
   useEffect(() => {
+    if (mode !== "chaos") return;
+    const price = priceInput < 1 ? 1 : priceInput;
     const chaosToDivine = (chaos: number) => {
       return chaos / price;
     };
@@ -48,7 +52,7 @@ export default function Home() {
         price
     );
     setChaosOutput(chaos);
-  }, [chaosInput, price]);
+  }, [chaosInput, priceInput, mode]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
@@ -74,8 +78,8 @@ export default function Home() {
             <Input
               id="price"
               type="number"
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
+              value={priceInput}
+              onChange={(e) => setPriceInput(Number(e.target.value))}
             />
           </div>
           <Separator className="mt-3" />
